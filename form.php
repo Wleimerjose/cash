@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulario</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-rose-50 via-sky-50 to-emerald-50">
+  <main class="mx-auto flex min-h-screen max-w-5xl items-center justify-center p-6">
+    <section class="w-full max-w-lg">
+      <!-- Card -->
+      <div class="rounded-3xl bg-white/80 p-8 shadow-xl ring-1 ring-black/5 backdrop-blur">
+        <div class="mb-6">
+          <h1 class="text-2xl font-semibold tracking-tight text-slate-800">
+            Envíanos tus datos
+          </h1>
+          <p class="mt-1 text-sm text-slate-600">
+            Completa el formulario y lo guardaremos en Google Sheets.
+          </p>
+        </div>
+
+        <form id="miForm" class="space-y-4">
+          <!-- Campo 1 -->
+          <div>
+            <label for="campo1" class="mb-1 block text-sm font-medium text-slate-700">
+              Campo 1
+            </label>
+            <input
+              id="campo1"
+              required
+              placeholder="Ej: Nombre"
+              class="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm outline-none transition
+                     focus:border-sky-300 focus:ring-4 focus:ring-sky-100"
+            />
+          </div>
+
+          <!-- Campo 2 -->
+          <div>
+            <label for="campo2" class="mb-1 block text-sm font-medium text-slate-700">
+              Campo 2
+            </label>
+            <input
+              id="campo2"
+              required
+              placeholder="Ej: Email"
+              class="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm outline-none transition
+                     focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100"
+            />
+          </div>
+
+          <!-- Campo 3 -->
+          <div>
+            <label for="campo3" class="mb-1 block text-sm font-medium text-slate-700">
+              Campo 3
+            </label>
+            <input
+              id="campo3"
+              placeholder="Ej: Teléfono"
+              class="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm outline-none transition
+                     focus:border-rose-300 focus:ring-4 focus:ring-rose-100"
+            />
+          </div>
+
+          <!-- Campo 4 -->
+          <div>
+            <label for="campo4" class="mb-1 block text-sm font-medium text-slate-700">
+              Campo 4
+            </label>
+            <textarea
+              id="campo4"
+              rows="4"
+              placeholder="Ej: Mensaje"
+              class="w-full resize-none rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm outline-none transition
+                     focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
+            ></textarea>
+          </div>
+
+          <!-- Button + Status -->
+          <div class="pt-2">
+            <button
+              id="btnEnviar"
+              type="submit"
+              class="group inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-sky-200 via-rose-200 to-emerald-200 px-4 py-3
+                     font-semibold text-slate-800 shadow-md shadow-slate-200/60 ring-1 ring-black/5 transition
+                     hover:brightness-[0.98] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <span>Enviar</span>
+              <span class="inline-block transition group-hover:translate-x-0.5">→</span>
+            </button>
+
+            <p id="estado"
+               class="mt-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-700 ring-1 ring-slate-100">
+              Listo para enviar.
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Footer note -->
+      <p class="mt-4 text-center text-xs text-slate-500">
+        Diseño pastel con Tailwind (CDN). Puedes cambiar textos y colores cuando quieras.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const WEB_APP_URL = "PEGA_AQUI_TU_URL_DEL_WEB_APP";
+    const TOKEN = "CAMBIA_ESTE_TOKEN_LARGO_Y_SEGURO";
+
+    const form = document.getElementById("miForm");
+    const estado = document.getElementById("estado");
+    const btnEnviar = document.getElementById("btnEnviar");
+
+    const setStatus = (msg, type = "info") => {
+      // type: info | ok | error
+      const base = "mt-3 rounded-2xl px-4 py-3 text-sm ring-1 transition";
+      const styles = {
+        info:  base + " bg-slate-50 text-slate-700 ring-slate-100",
+        ok:    base + " bg-emerald-50 text-emerald-800 ring-emerald-100",
+        error: base + " bg-rose-50 text-rose-800 ring-rose-100",
+      };
+      estado.className = styles[type] || styles.info;
+      estado.textContent = msg;
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const payload = {
+        token: TOKEN,
+        campo1: document.getElementById("campo1").value,
+        campo2: document.getElementById("campo2").value,
+        campo3: document.getElementById("campo3").value,
+        campo4: document.getElementById("campo4").value,
+      };
+
+      btnEnviar.disabled = true;
+      setStatus("Enviando...", "info");
+
+      try {
+        const res = await fetch(WEB_APP_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await res.json();
+
+        if (data.ok) {
+          setStatus("✅ Enviado correctamente", "ok");
+          form.reset();
+        } else {
+          setStatus("❌ Error: " + (data.error || "desconocido"), "error");
+        }
+      } catch (err) {
+        setStatus("❌ Error de red: " + err, "error");
+      } finally {
+        btnEnviar.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
