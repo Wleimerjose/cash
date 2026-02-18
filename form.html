@@ -19,23 +19,21 @@
                 </header>
 
                 <form id="gastoForm" class="space-y-4" autocomplete="off">
-                    <!-- Fecha -->
-                    <div>
-                        <label for="fechaCompra" class="mb-1 block text-sm font-medium text-slate-700">
+                    <!-- Fecha de Compra -->
+                    <div class="relative">
+                        <input type="date" id="fechaCompra" autocomplete="off" value="<?php echo date('Y-m-d'); ?>" class="peer w-full rounded-2xl border border-slate-300 bg-white/70 px-4 py-3 text-slate-800 placeholder:text-slate-400
+             shadow-sm outline-none transition focus:border-sky-300 focus:ring-4 focus:ring-sky-100" />
+                        <label for="fechaCompra" class="absolute -top-2 left-3 px-1 text-xs font-medium text-sky-700
+             bg-white/90 backdrop-blur rounded-full">
                             Fecha de Compra
                         </label>
-                        <input type="date" id="fechaCompra" autocomplete="off" value="<?php echo date('Y-m-d'); ?>" class="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm outline-none transition
-             focus:border-sky-300 focus:ring-4 focus:ring-sky-100" />
                     </div>
 
                     <!-- Categoría -->
-                    <div>
-                        <label for="categoria" class="mb-1 block text-sm font-medium text-slate-700">
-                            Categoría
-                        </label>
-                        <select id="categoria" autocomplete="off" class="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-800 shadow-sm outline-none transition
-             focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100">
-                            <option value="" selected disabled>Selecciona una categoría</option>
+                    <div class="relative">
+                        <select id="categoria" autocomplete="off" class="peer w-full appearance-none rounded-2xl border border-slate-300 bg-white/70 px-4 py-3 text-slate-800
+             shadow-sm outline-none transition focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100">
+                            <option value="" selected disabled></option>
                             <option>Arriendo</option>
                             <option>Caracas</option>
                             <option>Gastos Mariana</option>
@@ -45,28 +43,37 @@
                             <option>Servicios</option>
                             <option>Tarjeta de Crédito</option>
                         </select>
+
+                        <label for="categoria" class="absolute -top-2 left-3 px-2 text-xs font-medium text-emerald-700
+             bg-white/90 backdrop-blur rounded-full">
+                            Categoría
+                        </label>
+
+                        <!-- flechita del select -->
+                        <span
+                            class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-500">▾</span>
                     </div>
 
                     <!-- Descripción -->
-                    <div>
-                        <label for="descripcion" class="mb-1 block text-sm font-medium text-slate-700">
+                    <div class="relative">
+                        <input id="descripcion" autocomplete="off" class="peer w-full rounded-2xl border border-slate-300 bg-white/70 px-4 py-3 text-slate-800 placeholder:text-slate-400
+             shadow-sm outline-none transition focus:border-rose-300 focus:ring-4 focus:ring-rose-100" />
+                        <label for="descripcion" class="absolute -top-2 left-3 px-2 text-xs font-medium text-rose-700
+             bg-white/90 backdrop-blur rounded-full">
                             Descripción
                         </label>
-                        <input id="descripcion" autocomplete="off" placeholder="Ej: Compra supermercado" class="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm outline-none transition
-             focus:border-rose-300 focus:ring-4 focus:ring-rose-100" />
                     </div>
 
                     <!-- Valor -->
-                    <div>
-                        <label for="valor" class="mb-1 block text-sm font-medium text-slate-700">
+                    <div class="relative">
+                        <span
+                            class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">$</span>
+                        <input id="valor" autocomplete="off" inputmode="numeric" class="peer w-full rounded-2xl border border-slate-300 bg-white/70 pl-8 pr-4 py-3 text-slate-800 placeholder:text-slate-400
+             shadow-sm outline-none transition focus:border-violet-300 focus:ring-4 focus:ring-violet-100" />
+                        <label for="valor" class="absolute -top-2 left-3 px-2 text-xs font-medium text-violet-700
+             bg-white/90 backdrop-blur rounded-full">
                             Valor (COP)
                         </label>
-                        <div class="relative">
-                            <span
-                                class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">$</span>
-                            <input id="valor" autocomplete="off" inputmode="numeric" placeholder="25000" class="w-full rounded-2xl border border-slate-200 bg-white/70 pl-8 pr-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm outline-none transition
-               focus:border-violet-300 focus:ring-4 focus:ring-violet-100" />
-                        </div>
                     </div>
 
                     <div class="pt-2">
@@ -79,6 +86,7 @@
                         </button>
                     </div>
                 </form>
+
 
             </div>
         </section>
