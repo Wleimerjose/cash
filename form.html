@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gastos Alemania</title>
+  <title>Gastos Alemanias</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -111,50 +111,55 @@
   </main>
 
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzidaLrt2pCoCFizQfGz0mRAM8vep8YjDZbXx9alGy4GtKMuV_cjXpoMjd9XUTKJnWp/exec";
-    const TOKEN = "CAMBIA_ESTE_TOKEN_LARGO_Y_SEGURO";
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzidaLrt2pCoCFizQfGz0mRAM8vep8YjDZbXx9alGy4GtKMuV_cjXpoMjd9XUTKJnWp/exec";
+  const TOKEN = "CAMBIA_ESTE_TOKEN_LARGO_Y_SEGURO";
 
-    const form = document.getElementById("gastoForm");
+  // callback global para JSONP
+  window.onGsResponse = function (data) {
     const estado = document.getElementById("estado");
     const btn = document.getElementById("btnGuardar");
+    btn.disabled = false;
 
-    const onlyDigits = (s) => (s || "").toString().replace(/[^\d]/g, "");
+    if (data && data.ok) {
+      estado.textContent = "✅ Guardado en Google Sheets.";
+      document.getElementById("gastoForm").reset();
+    } else {
+      estado.textContent = "❌ Error: " + (data?.error || "desconocido");
+    }
+  };
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+  function sendJsonp(params) {
+    return new Promise((resolve) => {
+      const qs = new URLSearchParams(params).toString();
+      const s = document.createElement("script");
+      s.src = `${WEB_APP_URL}?${qs}`;
+      s.async = true;
 
-      const payload = {
-        token: TOKEN,
-        fechaCompra: document.getElementById("fechaCompra").value,
-        categoria: document.getElementById("categoria").value,
-        descripcion: document.getElementById("descripcion").value,
-        valor: Number(onlyDigits(document.getElementById("valor").value) || 0),
-      };
+      s.onload = () => { s.remove(); resolve(true); };
+      s.onerror = () => { s.remove(); window.onGsResponse({ ok:false, error:"Failed to load script" }); resolve(false); };
 
-      btn.disabled = true;
-      estado.textContent = "Guardando...";
-
-      try {
-        const res = await fetch(WEB_APP_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        const data = await res.json();
-
-        if (data.ok) {
-          estado.textContent = "✅ Guardado en Google Sheets.";
-          form.reset();
-        } else {
-          estado.textContent = "❌ Error: " + (data.error || "desconocido");
-        }
-      } catch (err) {
-        estado.textContent = "❌ Error de red: " + err;
-      } finally {
-        btn.disabled = false;
-      }
+      document.body.appendChild(s);
     });
-  </script>
+  }
+
+  document.getElementById("gastoForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const estado = document.getElementById("estado");
+    const btn = document.getElementById("btnGuardar");
+    btn.disabled = true;
+    estado.textContent = "Guardando...";
+
+    await sendJsonp({
+      callback: "onGsResponse",
+      token: TOKEN,
+      fechaCompra: document.getElementById("fechaCompra").value,
+      categoria: document.getElementById("categoria").value,
+      descripcion: document.getElementById("descripcion").value,
+      valor: document.getElementById("valor").value
+    });
+  });
+</script>
+
 </body>
 </html>
