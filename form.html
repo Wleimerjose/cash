@@ -109,52 +109,47 @@
       </div>
     </section>
   </main>
-
+  
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzidaLrt2pCoCFizQfGz0mRAM8vep8YjDZbXx9alGy4GtKMuV_cjXpoMjd9XUTKJnWp/exec";
-    const TOKEN = "CAMBIA_ESTE_TOKEN_LARGO_Y_SEGURO";
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzidaLrt2pCoCFizQfGz0mRAM8vep8YjDZbXx9alGy4GtKMuV_cjXpoMjd9XUTKJnWp/exec";
+  const TOKEN = "CAMBIA_ESTE_TOKEN_LARGO_Y_SEGURO";
 
-    const form = document.getElementById("gastoForm");
-    const estado = document.getElementById("estado");
-    const btn = document.getElementById("btnGuardar");
+  const form = document.getElementById("gastoForm");
+  const estado = document.getElementById("estado");
+  const btn = document.getElementById("btnGuardar");
 
-    const onlyDigits = (s) => (s || "").toString().replace(/[^\d]/g, "");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const payload = {
-        token: TOKEN,
-        fechaCompra: document.getElementById("fechaCompra").value,
-        categoria: document.getElementById("categoria").value,
-        descripcion: document.getElementById("descripcion").value,
-        valor: Number(onlyDigits(document.getElementById("valor").value) || 0),
-      };
-
-      btn.disabled = true;
-      estado.textContent = "Guardando...";
-
-      try {
-        const res = await fetch(WEB_APP_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        const data = await res.json();
-
-        if (data.ok) {
-          estado.textContent = "✅ Guardado en Google Sheets.";
-          form.reset();
-        } else {
-          estado.textContent = "❌ Error: " + (data.error || "desconocido");
-        }
-      } catch (err) {
-        estado.textContent = "❌ Error de red: " + err;
-      } finally {
-        btn.disabled = false;
-      }
+    const body = new URLSearchParams({
+      token: TOKEN,
+      fechaCompra: document.getElementById("fechaCompra").value,
+      categoria: document.getElementById("categoria").value,
+      descripcion: document.getElementById("descripcion").value,
+      valor: document.getElementById("valor").value,
     });
-  </script>
+
+    btn.disabled = true;
+    estado.textContent = "Guardando...";
+
+    try {
+      await fetch(WEB_APP_URL, {
+        method: "POST",
+        mode: "no-cors", // ✅ evita bloqueo del navegador por CORS
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body,
+      });
+
+      // Con no-cors no se puede leer JSON, asumimos OK si no hubo excepción.
+      estado.textContent = "✅ Enviado. Revisa tu Google Sheets.";
+      form.reset();
+    } catch (err) {
+      estado.textContent = "❌ Failed to fetch: " + err;
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+
 </body>
 </html>
