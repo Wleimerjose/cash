@@ -20,142 +20,139 @@
           </p>
         </header>
 
-        <form id="gastoForm" class="space-y-4">
-          <!-- Fecha -->
-          <div>
-            <label for="fechaCompra" class="mb-1 block text-sm font-medium text-slate-700">
-              Fecha de Compra
-            </label>
-            <input
-              id="fechaCompra"
-              autocomplete="off"
-              placeholder="20/01/2026"
-              class="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm outline-none transition
-                     focus:border-sky-300 focus:ring-4 focus:ring-sky-100"
-            />
-          </div>
+        <form id="gastoForm" class="space-y-4" autocomplete="off">
+  <!-- Fecha -->
+  <div>
+    <label for="fechaCompra" class="mb-1 block text-sm font-medium text-slate-700">
+      Fecha de Compra
+    </label>
+    <input
+      id="fechaCompra"
+      autocomplete="off"
+      placeholder="20/01/2026"
+      class="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm outline-none transition
+             focus:border-sky-300 focus:ring-4 focus:ring-sky-100"
+    />
+  </div>
 
-          <!-- Categoría -->
-          <div>
-            <label for="categoria" class="mb-1 block text-sm font-medium text-slate-700">
-              Categoría
-            </label>
-            <select
-              id="categoria"
-              class="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-800 shadow-sm outline-none transition
-                     focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100"
-            >
-              <option value="" selected disabled>Selecciona una categoría</option>
-              <option>Arriendo</option>
-              <option>Caracas</option>
-              <option>Gastos Mariana</option>
-              <option>Gasolina</option>
-              <option>Mercado</option>
-              <option>Otros Gastos</option>
-              <option>Servicios</option>
-              <option>Tarjeta de Crédito</option>
-            </select>
-          </div>
+  <!-- Categoría -->
+  <div>
+    <label for="categoria" class="mb-1 block text-sm font-medium text-slate-700">
+      Categoría
+    </label>
+    <select
+      id="categoria"
+      autocomplete="off"
+      class="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-800 shadow-sm outline-none transition
+             focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100"
+    >
+      <option value="" selected disabled>Selecciona una categoría</option>
+      <option>Arriendo</option>
+      <option>Caracas</option>
+      <option>Gastos Mariana</option>
+      <option>Gasolina</option>
+      <option>Mercado</option>
+      <option>Otros Gastos</option>
+      <option>Servicios</option>
+      <option>Tarjeta de Crédito</option>
+    </select>
+  </div>
 
-          <!-- Descripción -->
-          <div>
-            <label for="descripcion" class="mb-1 block text-sm font-medium text-slate-700">
-              Descripción
-            </label>
-            <input
-              id="descripcion"
-              autocomplete="off"
-              placeholder="Ej: Compra supermercado"
-              class="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm outline-none transition
-                     focus:border-rose-300 focus:ring-4 focus:ring-rose-100"
-            />
-          </div>
+  <!-- Descripción -->
+  <div>
+    <label for="descripcion" class="mb-1 block text-sm font-medium text-slate-700">
+      Descripción
+    </label>
+    <input
+      id="descripcion"
+      autocomplete="off"
+      placeholder="Ej: Compra supermercado"
+      class="w-full rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm outline-none transition
+             focus:border-rose-300 focus:ring-4 focus:ring-rose-100"
+    />
+  </div>
 
-          <!-- Valor -->
-          <div>
-            <label for="valor" class="mb-1 block text-sm font-medium text-slate-700">
-              Valor (COP)
-            </label>
-            <div class="relative">
-              <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">$</span>
-              <input
-                id="valor"
-                inputmode="numeric"
-                placeholder="25000"
-                class="w-full rounded-2xl border border-slate-200 bg-white/70 pl-8 pr-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm outline-none transition
-                       focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
-              />
-            </div>
-            <p class="mt-1 text-xs text-slate-500">Puedes escribir 25.000 o 25000.</p>
-          </div>
+  <!-- Valor -->
+  <div>
+    <label for="valor" class="mb-1 block text-sm font-medium text-slate-700">
+      Valor (COP)
+    </label>
+    <div class="relative">
+      <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">$</span>
+      <input
+        id="valor"
+        autocomplete="off"
+        inputmode="numeric"
+        placeholder="25000"
+        class="w-full rounded-2xl border border-slate-200 bg-white/70 pl-8 pr-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm outline-none transition
+               focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
+      />
+    </div>
+  </div>
 
-          <div class="pt-2">
-            <button
-              id="btnGuardar"
-              type="submit"
-              class="group inline-flex w-full items-center justify-center gap-2 rounded-2xl
-                     bg-gradient-to-r from-sky-200 via-rose-200 to-emerald-200 px-4 py-3
-                     font-semibold text-slate-800 shadow-md shadow-slate-200/60 ring-1 ring-black/5 transition
-                     hover:brightness-[0.98] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              <span>Guardar gasto</span>
-              <span class="inline-block transition group-hover:translate-x-0.5">→</span>
-            </button>
-
-            <p id="estado"
-               class="mt-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-700 ring-1 ring-slate-100">
-              Listo para guardar.
-            </p>
-          </div>
-        </form>
+  <div class="pt-2">
+    <button
+      id="btnGuardar"
+      type="submit"
+      class="group inline-flex w-full items-center justify-center gap-2 rounded-2xl
+             bg-gradient-to-r from-sky-200 via-rose-200 to-emerald-200 px-4 py-3
+             font-semibold text-slate-800 shadow-md shadow-slate-200/60 ring-1 ring-black/5 transition
+             hover:brightness-[0.98] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
+    >
+      <span>Guardar gasto</span>
+      <span class="inline-block transition group-hover:translate-x-0.5">→</span>
+    </button>
+  </div>
+</form>
+        
       </div>
     </section>
   </main>
 
-  <script>
+<script>
   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzidaLrt2pCoCFizQfGz0mRAM8vep8YjDZbXx9alGy4GtKMuV_cjXpoMjd9XUTKJnWp/exec";
   const TOKEN = "CAMBIA_ESTE_TOKEN_LARGO_Y_SEGURO";
-
-  // callback global para JSONP
   const REDIRECT_TO = "/cash/";
 
-window.onGsResponse = function (data) {
-  const estado = document.getElementById("estado");
-  const btn = document.getElementById("btnGuardar");
-  btn.disabled = false;
+  // JSONP callback (sin mostrar estado)
+  window.onGsResponse = function (data) {
+    const btn = document.getElementById("btnGuardar");
+    btn.disabled = false;
 
-  if (data && data.ok) {
-    estado.textContent = "✅ Guardado. Redirigiendo...";
-    window.location.href = REDIRECT_TO;
-  } else {
-    estado.textContent = "❌ Error: " + (data?.error || "desconocido");
-  }
-};
-
+    if (data && data.ok) {
+      window.location.href = REDIRECT_TO; // ✅ redirección inmediata
+    } else {
+      // Si quieres, puedes hacer un alert mínimo (opcional):
+      alert("Error: " + (data?.error || "desconocido"));
+    }
+  };
 
   function sendJsonp(params) {
-    return new Promise((resolve) => {
-      const qs = new URLSearchParams(params).toString();
-      const s = document.createElement("script");
-      s.src = `${WEB_APP_URL}?${qs}`;
-      s.async = true;
+    const qs = new URLSearchParams(params).toString();
+    const s = document.createElement("script");
+    s.src = `${WEB_APP_URL}?${qs}`;
+    s.async = true;
 
-      s.onload = () => { s.remove(); resolve(true); };
-      s.onerror = () => { s.remove(); window.onGsResponse({ ok:false, error:"Failed to load script" }); resolve(false); };
+    s.onerror = () => {
+      s.remove();
+      window.onGsResponse({ ok: false, error: "Failed to load script" });
+    };
 
-      document.body.appendChild(s);
-    });
+    s.onload = () => {
+      // el callback se ejecuta al cargar
+      s.remove();
+    };
+
+    document.body.appendChild(s);
   }
 
-  document.getElementById("gastoForm").addEventListener("submit", async (e) => {
+  document.getElementById("gastoForm").addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const estado = document.getElementById("estado");
     const btn = document.getElementById("btnGuardar");
     btn.disabled = true;
-    estado.textContent = "Guardando...";
 
-    await sendJsonp({
+    sendJsonp({
       callback: "onGsResponse",
       token: TOKEN,
       fechaCompra: document.getElementById("fechaCompra").value,
